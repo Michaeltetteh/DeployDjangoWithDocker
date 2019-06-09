@@ -1,5 +1,28 @@
 from django.db import models
 
+# Person Manager
+class PersonManager(models.Manager):
+    def all_with_prefetch_movies(self):
+        qs = self.get_queryset()
+        return qs.prefetch_related(
+            'directed',
+            'writing_credits',
+            'role_set__movie'
+        )
+
+
+#Movie Manager
+class MovieManager(models.Manager):
+    def all_with_related_persons(self):
+        qs = self.get_queryset()
+        qs = qs.select_related('director')
+        qs = qs.prefetch_related('writers','actors')
+        return qs
+    
+
+
+
+
 # Create your models here.
 class Movie(models.Model):
     NOT_RATED = 0
@@ -29,7 +52,7 @@ class Movie(models.Model):
                     null=True,
                     blank=True)
 
-    writer      = models.ManyToManyField(
+    writers      = models.ManyToManyField(
                     to='Person',
                     related_name='writing_credits',
                     blank=True)
@@ -39,6 +62,8 @@ class Movie(models.Model):
                     through='Role',
                     related_name='acting_credits',
                     blank=True)
+
+    object = MovieManager()
 
     class Meta:
         ordering = ('-year','title')
@@ -53,6 +78,7 @@ class Person(models.Model):
     born        = models.DateField()
     died        = models.DateField(null=True,blank=True)
 
+    object = PersonManager()
     class Meta:
         ordering = ('last_name','first_name')
     
@@ -83,3 +109,5 @@ class Role(models.Model):
                             'movie',
                             'person',
                             'name')
+
+

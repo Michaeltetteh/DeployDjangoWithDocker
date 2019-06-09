@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.models import Movie
+from core.models import Movie,Person
 from django.views.generic import (
     ListView,
     DetailView,
@@ -7,7 +7,6 @@ from django.views.generic import (
 
 class MovieListView(ListView):
     model = Movie
-    # template_name = "movie_list"
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
@@ -19,5 +18,8 @@ class MovieListView(ListView):
         return ctx
 
 class MovieDetail(DetailView):
-    model = Movie
+    queryset = ( Movie.object.all_with_related_persons())
 
+
+class PersonDetail(DetailView):
+    queryset = Person.object.all_with_prefetch_movies()
