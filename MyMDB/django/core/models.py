@@ -20,9 +20,6 @@ class MovieManager(models.Manager):
         return qs
     
 
-
-
-
 # Create your models here.
 class Movie(models.Model):
     NOT_RATED = 0
@@ -39,29 +36,12 @@ class Movie(models.Model):
     title       = models.CharField( max_length=140)
     plot        = models.TextField()
     year        = models.PositiveIntegerField()
-    rating      = models.IntegerField(
-                    choices=RATINGS,
-                    default=NOT_RATED)
-
+    rating      = models.IntegerField(choices=RATINGS,default=NOT_RATED)
     runtime     = models.PositiveIntegerField()
     website     = models.URLField( blank=True)
-    director    = models.ForeignKey(
-                    to='Person',
-                    on_delete=models.SET_NULL,
-                    related_name='directed',
-                    null=True,
-                    blank=True)
-
-    writers      = models.ManyToManyField(
-                    to='Person',
-                    related_name='writing_credits',
-                    blank=True)
-
-    actors      = models.ManyToManyField(
-                    to='Person',
-                    through='Role',
-                    related_name='acting_credits',
-                    blank=True)
+    director    = models.ForeignKey(to='Person',on_delete=models.SET_NULL,related_name='directed',null=True,blank=True)
+    writers      = models.ManyToManyField(to='Person',related_name='writing_credits',blank=True)
+    actors      = models.ManyToManyField(to='Person',through='Role',related_name='acting_credits',blank=True)
 
     object = MovieManager()
 
