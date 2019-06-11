@@ -4,8 +4,8 @@ from core.models import Vote,Movie
 
 class VoteForm(forms.ModelForm):
     user = forms.ModelChoiceField(widget=forms.HiddenInput,
-                                  quertset=get_user_model.objects.all(),
-                                  disabled=True)
+                                  queryset = get_user_model().objects.all(),
+                                  disabled = True)
     movie = forms.ModelChoiceField(widget=forms.HiddenInput,
                                     queryset=Movie.object.all(),
                                     disabled=True)
