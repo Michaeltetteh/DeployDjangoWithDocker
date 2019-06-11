@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Person Manager
 class PersonManager(models.Manager):
     def all_with_prefetch_movies(self):
@@ -19,6 +19,14 @@ class MovieManager(models.Manager):
         qs = qs.prefetch_related('writers','actors')
         return qs
     
+#vote Manager
+class VoteManager(models.Manager):
+    def get_vote_or_unsaved_blank_vote(self,movie,user):
+        try:
+            return Vote.objects.get(movie=movie,user=user)
+        except Vote.DoesNotExist:
+            return Vote(movie=movie,user=user)
+
 
 # Create your models here.
 class Movie(models.Model):
@@ -91,3 +99,19 @@ class Role(models.Model):
                             'name')
 
 
+class Vote(models.Model):
+    UP = 1
+    DOWN = -1
+    VALUE_CHOICES = (
+         (UP, "👍",),
+        (DOWN, "👎",),
+    )
+
+    value = models.SmallIntegerField(choices=VALUE_CHOICES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
+    voted_on= models.DateTimeField(auto_now=True)
+
+    objects = VoteManager()
+    class Meta:
+        unique_together = ('user','movie')
