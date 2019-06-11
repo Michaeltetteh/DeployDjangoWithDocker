@@ -74,6 +74,9 @@ TEMPLATES = [
     },
 ]
 
+#upon successful login a user should be redirected to our movie list
+LOGIN_REDIRECT_URL = 'core:MovieListView'
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
