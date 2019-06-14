@@ -22,6 +22,10 @@
             <nav class="nav">
                 <div class="navbar-brand">MyMDB</div>
                 <a class="nav-link" href="{% url 'core:MovieListView'%}">Movies</a>
+                
+                <a href="{% url 'core:TopMovies' %}" class="nav-link">
+                    Top 10 Movies
+                </a>
             </nav>
         </div>
     </div>

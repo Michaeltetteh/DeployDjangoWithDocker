@@ -118,3 +118,12 @@ class MovieImageUpload(LoginRequiredMixin,CreateView):
         movie_detail_url = reverse('core:MovieDetail',kwargs={'pk':movie_id})
 
         return movie_detail_url
+
+
+
+class TopMovies(ListView):
+    template_name = 'core/top_movie_list.html'
+    queryset = Movie.object.top_movies(limit=10)
+
+
+    
