@@ -16,10 +16,12 @@ from .forms import (
     MovieImageForm,
 )
 
+from .mixins import CachePageVaryOnCookieMixin
 
 
 
-class MovieListView(ListView):
+
+class MovieListView(CachePageVaryOnCookieMixin,ListView):
     model = Movie
     paginate_by = 10
 
@@ -126,4 +128,3 @@ class TopMovies(ListView):
     queryset = Movie.object.top_movies(limit=10)
 
 
-    

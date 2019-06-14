@@ -89,6 +89,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'../media_root')
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+#Cache configs
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-locmemcache',
+        'TIMEOUT' : 5,
+    }
+}
+
+CSRF_USE_SESSIONS = True # to prevent storing csrf tokens in cookie but store csrf tokens in user's session
+
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
