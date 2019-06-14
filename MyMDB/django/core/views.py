@@ -123,7 +123,7 @@ class MovieImageUpload(LoginRequiredMixin,CreateView):
 
 
 
-class TopMovies(ListView):
+class TopMovies(CachePageVaryOnCookieMixin,ListView):
     template_name = 'core/top_movie_list.html'
     queryset = Movie.object.top_movies(limit=10)
 
