@@ -20,18 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hj*n587%8=!=%3e0*90e@bgwro4lmbwxf@d#vpi^s00pxuccdn'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1'
 ]
-
-INTERNAL_IPS =('127.0.0.1','172.17.0.1')
-
 
 # Application definition
 
@@ -44,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -89,15 +85,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'../media_root')
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-#Cache configs
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default-locmemcache',
-        'TIMEOUT' : 5,
-    }
-}
-
 CSRF_USE_SESSIONS = True # to prevent storing csrf tokens in cookie but store csrf tokens in user's session
 
 
@@ -106,12 +93,7 @@ CSRF_USE_SESSIONS = True # to prevent storing csrf tokens in cookie but store cs
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mymdb',
-        'USER': 'postgres',
-        'PASSWORD': 'KMF)jmf2-92[2[5kvm-n6v9=o53:2PM6',
-        'HOST': '127.0.0.1',
-        'PORT':'5432',
+        'ENGINE': 'django.db.backends.postgresql'
     }
 }
 
@@ -153,3 +135,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR,'gathered_static_files')
