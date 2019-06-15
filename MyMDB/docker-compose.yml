@@ -1,4 +1,4 @@
-version: '3'
+version: '3,7'
 
 services:
   db:
@@ -30,4 +30,3 @@ services:
       - DJANGO_DB_HOST
       - DJANGO_DB_PORT
       - DJANGO_CACHE_TIMEOUT
-      
