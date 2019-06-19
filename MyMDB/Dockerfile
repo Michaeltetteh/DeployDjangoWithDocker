@@ -18,10 +18,8 @@ RUN apt-get install -y \
 
 RUN pip3 install virtualenv
 RUN virtualenv /mymdb/virtualenv
-RUN bash /mymdb/scripts/pip_install.sh /mymdb
-
-
-RUN bash /mymdb/scripts/collect_static.sh /mymdb
+RUN /mymdb/scripts/pip_install.sh /mymdb
+RUN /mymdb/scripts/collect_static.sh /mymdb
 
 #config nginx
 COPY nginx/mymdb.conf /etc/nginx/sites-available/mymdb.conf
